@@ -1,0 +1,32 @@
+// 1️⃣ Switch to database 'ravi'
+use ravi
+
+// 2️⃣ Insert multiple students
+db.student.insertMany([
+  { name: "Amith", age: 19, branch: "CSE" },
+  { name: "Srinu", age: 25, branch: "CSE" },
+  { name: "Anita", age: 22, branch: "ECE" },
+  { name: "Ganesh", age: 20, branch: "CSE" },
+  { name: "Neha", age: 21, branch: "ECE" }
+])
+
+// 3️⃣ Create an index on age (ascending)
+db.student.createIndex({ age: 1 })
+
+// 4️⃣ Create a compound index on age + branch
+db.student.createIndex({ age: 1, branch: 1 })
+
+// 5️⃣ Find all students
+db.student.find()
+
+// 6️⃣ Find all students sorted by age ascending
+db.student.find().sort({ age: 1 })
+
+// 7️⃣ Find all students sorted by age descending
+db.student.find().sort({ age: -1 })
+
+// 8️⃣ Find CSE students sorted by age ascending
+db.student.find({ branch: "CSE" }).sort({ age: 1 })
+
+// 9️⃣ Show all indexes
+db.student.getIndexes()

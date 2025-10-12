@@ -1,0 +1,113 @@
+// Import mongoose
+const mongoose = require("mongoose");
+
+// Connect to local MongoDB "ravi" database
+mongoose.connect("mongodb://localhost:27017/ravi", {
+ useNewUrlParser: true,
+ useUnifiedTopology: true
+
+})
+.then(() => console.log("Connected to MongoDB"))
+.catch(err => console.error("Connection error:", err));
+
+// Define schema (only name and age)
+const studentSchema = new mongoose.Schema({
+ name: String,
+ age: Number,
+ branch: String
+});
+
+// Use existing collection "student"
+const Student = mongoose.model("Student", studentSchema, "student");
+
+// ----------------------------
+// CRUD Operations
+// ----------------------------
+
+// CREATE: Insert a student
+async function createStudent() {
+ const student = new Student({ name: "Anil", age: 20 , branch:"CSE"});
+ await student.save();
+ console.log("Student inserted");
+}
+
+// READ: Find all students
+async function readStudents() {
+ const students = await Student.find();
+ console.log("All Students:", students);
+}
+
+// UPDATE: Update student's age
+async function updateStudent() {
+ await Student.updateOne({ name: "Anil" }, { $set: { age: 21 } });
+ console.log("Student updated");
+}
+
+// DELETE: Delete a student
+async function deleteStudent() {
+ await Student.deleteOne({ name: "Anil" });
+ console.log("Student deleted");
+}
+
+// Run operations
+async function run() {
+ await createStudent();
+ await readStudents();
+ await updateStudent();
+ await readStudents();
+ await deleteStudent();
+ await readStudents();
+ mongoose.connection.close(); }
+run();
+
+
+output:
+node p1.js
+>>
+Connected to MongoDB
+Student inserted
+All Students: [
+
+{
+ _id: new ObjectId('68e899f74675904b6bb1f33e'),
+ name: 'srinu',
+ age: 25,
+ branch: 'CSE'
+ },
+
+{
+ _id: new ObjectId('68e8d46795f505b366ab605a'),
+ name: 'Anil',
+ age: 20,
+ branch: 'CSE',
+ __v: 0
+
+}
+]
+Student updated
+All Students: [
+
+{
+ _id: new ObjectId('68e899f74675904b6bb1f33e'),
+ name: 'srinu',
+ age: 25,
+ branch: 'CSE'
+ },
+
+{
+ _id: new ObjectId('68e8d46795f505b366ab605a'),
+ name: 'Anil',
+ age: 21,
+ branch: 'CSE',
+ __v: 0
+ }
+]
+Student deleted
+All Students: [
+ {
+ _id: new ObjectId('68e899f74675904b6bb1f33e'),
+ name: 'srinu',
+ age: 25,
+ branch: 'CSE'
+ }
+]

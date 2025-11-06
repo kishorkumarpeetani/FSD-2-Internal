@@ -1,0 +1,60 @@
+////Creating DataBase
+cmd: use collegeDB
+out: switched to db collegeDB
+cmd: db.students.insertMany([
+ { _id: 1, name: "Alice", age: 22, dept: "CSE", marks: 85 },
+ { _id: 2, name: "Bob", age: 21, dept: "ECE", marks: 75 },
+ { _id: 3, name: "Charlie", age: 23, dept: "CSE", marks: 90 },
+ { _id: 4, name: "David", age: 20, dept: "MECH", marks: 70 },
+58
+ { _id: 5, name: "Eve", age: 22, dept: "ECE", marks: 88 }
+])
+out: {
+ acknowledged: true,
+ insertedIds: {
+ '0': 1,
+ '1': 2,
+ '2': 3,
+ '3': 4,
+ '4': 5
+ }
+}
+////Find()
+cmd: db.students.find()
+out: [
+ { _id: 1, name: "Alice", age: 22, dept: "CSE", marks: 85 },
+ { _id: 2, name: "Bob", age: 21, dept: "ECE", marks: 75 },
+ { _id: 3, name: "Charlie", age: 23, dept: "CSE", marks: 90 },
+ { _id: 4, name: "David", age: 20, dept: "MECH", marks: 70 },
+ { _id: 5, name: "Eve", age: 22, dept: "ECE", marks: 88 }
+]
+cmd: db.students.find({ dept: "CSE" })
+out: [
+ { _id: 1, name: "Alice", age: 22, dept: "CSE", marks: 85 },
+ { _id: 3, name: "Charlie", age: 23, dept: "CSE", marks: 90 }
+]
+////Limit()
+cmd: db.students.find().limit(3)
+out: [
+ { _id: 1, name: "Alice", age: 22, dept: "CSE", marks: 85 },
+ { _id: 2, name: "Bob", age: 21, dept: "ECE", marks: 75 },
+ { _id: 3, name: "Charlie", age: 23, dept: "CSE", marks: 90 }
+]
+////sort()
+cmd: db.students.find().sort({ marks: 1 }) /Ascending
+out: [
+ { _id: 4, name: "David", age: 20, dept: "MECH", marks: 70 },
+ { _id: 2, name: "Bob", age: 21, dept: "ECE", marks: 75 },
+ { _id: 1, name: "Alice", age: 22, dept: "CSE", marks: 85 },
+59
+ { _id: 5, name: "Eve", age: 22, dept: "ECE", marks: 88 },
+ { _id: 3, name: "Charlie", age: 23, dept: "CSE", marks: 90 }
+]
+cmd: db.students.find().sort({ marks: -1 }) /Decending
+out: [
+ { _id: 3, name: "Charlie", age: 23, dept: "CSE", marks: 90 },
+ { _id: 5, name: "Eve", age: 22, dept: "ECE", marks: 88 },
+ { _id: 1, name: "Alice", age: 22, dept: "CSE", marks: 85 },
+ { _id: 2, name: "Bob", age: 21, dept: "ECE", marks: 75 },
+ { _id: 4, name: "David", age: 20, dept: "MECH", marks: 70 }
+]

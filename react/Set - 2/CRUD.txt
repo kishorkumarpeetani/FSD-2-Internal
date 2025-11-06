@@ -1,0 +1,44 @@
+1. INSERT (Create Data)
+Insert one document:
+db.students.insert({
+  name: "Murali",
+  age: 21,
+  course: "CSE"
+});
+
+Insert multiple documents:
+db.students.insert([
+  { name: "Ravi", age: 22, course: "ECE" },
+  { name: "Asha", age: 20, course: "IT" }
+]);
+
+✅ 2. READ (Find Data)
+Find all documents:
+db.students.find();
+
+Find with condition:
+db.students.find({ course: "CSE" });
+
+Find with specific fields:
+db.students.find({ age: 21 }, { name: 1, course: 1, _id: 0 });
+
+✅ 3. UPDATE (Modify Data)
+Update one document:
+db.students.update(
+  { name: "Murali" },          // Condition
+  { $set: { age: 22 } }        // Change
+);
+
+Update multiple documents:
+db.students.update(
+  { course: "CSE" },
+  { $set: { course: "Computer Science" } },
+  { multi: true }
+);
+
+✅ 4. DELETE (Remove Data)
+Remove one document:
+db.students.remove({ name: "Ravi" });
+
+Remove all documents:
+db.students.remove({});

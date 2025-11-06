@@ -1,0 +1,17 @@
+cmd: use srkr
+Output: switched to db srkr
+cmd: db
+Output: srkr
+cmd: db.dropDatabase()
+Output: { ok: 1, dropped: 'srkr' }
+cmd: db.createCollection("branch")
+Output: { ok: 1 }
+cmd: show collections
+Output: branch
+cmd: db.branch.insertOne({name:"CSE"})
+Output: {
+ acknowledged: true,
+ insertedId: ObjectId('68e8dd7d970696cc2c198aeb')
+}
+cmd: db.branch.drop()
+Output: true
